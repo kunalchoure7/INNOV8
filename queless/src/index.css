@@ -1,0 +1,233 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  --ql-cyan: #a8eaf5;
+  --ql-sky: #9bd7fa;
+  --ql-lavender: #b7a9ff;
+  --ql-purple: #9a91f5;
+  --ql-light-blue: #d9f3ff;
+  --ql-primary-start: #356df3;
+  --ql-primary-end: #7859ed;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-display);
+  }
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================================================
+   3D BACKGROUND SPHERES & AMBIENT MOTION
+   ========================================================= */
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0px) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(6px, -14px, 0px) rotate(1.2deg);
+  }
+}
+
+@keyframes floatMedium {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0px) rotate(0deg);
+  }
+  50% {
+    transform: translate3d(-8px, -16px, 0px) rotate(-1.5deg);
+  }
+}
+
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0px);
+  }
+  50% {
+    transform: translate3d(8px, -10px, 0px);
+  }
+}
+
+@keyframes ambientDrift {
+  0%, 100% {
+    transform: translate3d(0px, 0px, 0px) scale(1);
+    opacity: 0.72;
+  }
+  50% {
+    transform: translate3d(20px, -14px, 0px) scale(1.06);
+    opacity: 0.92;
+  }
+}
+
+.animate-float-slow {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: floatMedium 6.2s ease-in-out infinite;
+}
+
+.animate-float-gentle {
+  animation: floatGentle 7s ease-in-out infinite;
+}
+
+.animate-ambient-drift {
+  animation: ambientDrift 14s ease-in-out infinite;
+}
+
+/* =========================================================
+   PREMIUM BUTTON SYSTEM & LIGHT-SWEEP ANIMATIONS
+   ========================================================= */
+
+.ql-btn {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 240ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 240ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.ql-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 55%;
+  height: 100%;
+  background: linear-gradient(
+    110deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.42) 50%,
+    transparent 100%
+  );
+  transform: translateX(-160%) skewX(-18deg);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.ql-btn > * {
+  position: relative;
+  z-index: 2;
+}
+
+.ql-btn-arrow {
+  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ql-btn:active:not(:disabled) {
+  transform: translateY(0px) scale(0.98);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ql-btn:hover:not(:disabled) {
+    transform: translateY(-2.5px);
+  }
+
+  .ql-btn:hover:not(:disabled)::before {
+    animation: qlButtonSweep 650ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .ql-btn:hover:not(:disabled) .ql-btn-arrow {
+    transform: translateX(4px);
+  }
+
+  .ql-btn-primary:hover:not(:disabled) {
+    filter: brightness(1.08) saturate(1.08);
+    box-shadow:
+      0 14px 32px rgba(53, 109, 243, 0.34),
+      0 6px 18px rgba(120, 89, 237, 0.28),
+      0 0 22px rgba(154, 145, 245, 0.35);
+  }
+
+  .ql-btn-secondary:hover:not(:disabled) {
+    background-color: rgba(255, 255, 255, 0.92);
+    border-color: rgba(120, 89, 237, 0.42);
+    box-shadow:
+      0 12px 28px rgba(53, 109, 243, 0.14),
+      0 0 18px rgba(183, 169, 255, 0.32);
+  }
+
+  .ql-btn-accent:hover:not(:disabled) {
+    filter: brightness(1.07);
+    box-shadow:
+      0 12px 28px rgba(14, 165, 233, 0.32),
+      0 0 20px rgba(168, 234, 245, 0.45);
+  }
+
+  .ql-btn-danger:hover:not(:disabled) {
+    filter: brightness(1.07);
+    box-shadow:
+      0 12px 28px rgba(244, 63, 94, 0.32),
+      0 0 18px rgba(236, 72, 153, 0.28);
+  }
+}
+
+@keyframes qlButtonSweep {
+  0% {
+    transform: translateX(-160%) skewX(-18deg);
+  }
+  100% {
+    transform: translateX(280%) skewX(-18deg);
+  }
+}
+
+/* =========================================================
+   NAVBAR ANIMATED GRADIENT UNDERLINE
+   ========================================================= */
+
+.ql-nav-link {
+  position: relative;
+}
+
+.ql-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #356df3, #7859ed);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ql-nav-link-active::after {
+  transform: scaleX(1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ql-nav-link:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+/* =========================================================
+   ACCESSIBILITY: REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

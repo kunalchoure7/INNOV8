@@ -1,0 +1,6 @@
+{
+  "name": "QueueLess",
+  "description": "Smart Digital Queue Management System — Your Time Matters. Skip the Queue. Book digital tokens, track live queue positions, and receive real-time turn alerts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
